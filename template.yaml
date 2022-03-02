@@ -1,0 +1,49 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  kinesisLibraryTest
+
+  SAM template to test kinesis performance
+
+Globals:
+  Function:
+    Timeout: 60
+
+Parameters:
+  StreamName:
+    Type: String
+    Default: "testing-connect-ajshearn-01-contact-*"
+
+Resources:
+  kinesisLibraryTest:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: com.shearn89.kinesisLibraryTest.TestLambda::handleRequest
+      Runtime: java11
+      Description: test kinesis library performance
+      Architectures:
+        - arm64
+      MemorySize: 128
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSXrayWriteOnlyAccess
+        - S3WritePolicy:
+            BucketName: ajshearn-test-bucket
+        - KinesisStreamReadPolicy:
+            StreamName: !Ref StreamName
+        - Statement:
+            - Sid: KinesisGetDataPolicy
+              Effect: Allow
+              Action:
+                - "kinesisvideo:GetDataEndpoint"
+              Resource:
+                - !Sub "arn:aws:kinesisvideo:${AWS::Region}:${AWS::AccountId}:stream/${StreamName}"
+                - !Sub "arn:aws:kinesisvideo:${AWS::Region}:${AWS::AccountId}:stream/connect-contact*"
+        - Statement:
+            - Sid: KinesisGetMediaPolicy
+              Effect: Allow
+              Action:
+                - "kinesisvideo:GetMedia"
+              Resource:
+                - !Sub "arn:aws:kinesisvideo:${AWS::Region}:${AWS::AccountId}:stream/${StreamName}"
+      Tracing: Active

@@ -1,0 +1,11 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "kinesisLibraryTest"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1i9zvl4xi7v8f"
+s3_prefix = "kinesisLibraryTest"
+region = "eu-west-2"
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "StreamName=\"testing-connect-ajshearn-01-contact-*\""
+image_repositories = []

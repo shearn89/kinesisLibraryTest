@@ -1,0 +1,37 @@
+plugins {
+    id 'application'
+}
+apply plugin : "java"
+
+group 'com.shearn89'
+version '1.0-SNAPSHOT'
+
+ext {
+    javaMainClass = 'com.shearn89.kinesisLibraryTest.TestClass'
+}
+
+application {
+    mainClassName = 'com.shearn89.kinesisLibraryTest.TestClass'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation platform('software.amazon.awssdk:bom:2.16.60')
+    implementation 'software.amazon.awssdk:kinesisvideo'
+    implementation 'software.amazon.awssdk:kinesisvideomedia'
+    implementation 'com.amazonaws:aws-lambda-java-core:1.2.1'
+    implementation 'com.amazonaws:aws-lambda-java-events:3.8.0'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+sourceCompatibility = 11
+targetCompatibility = 11
