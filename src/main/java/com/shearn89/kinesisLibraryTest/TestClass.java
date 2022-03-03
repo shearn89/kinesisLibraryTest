@@ -1,5 +1,7 @@
 package com.shearn89.kinesisLibraryTest;
 
+import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
+import software.amazon.awssdk.core.SdkSystemSetting;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.kinesisvideo.KinesisVideoClient;
 import software.amazon.awssdk.services.kinesisvideo.model.APIName;
@@ -7,13 +9,12 @@ import software.amazon.awssdk.services.kinesisvideo.model.GetDataEndpointRequest
 import software.amazon.awssdk.services.kinesisvideo.model.GetDataEndpointResponse;
 
 public class TestClass {
-    private static Region region = Region.EU_WEST_2;
-    private static KinesisVideoClient amazonKinesisVideo = KinesisVideoClient
-            .builder()
+    private static final Region region = Region.of(System.getenv(SdkSystemSetting.AWS_REGION.environmentVariable()));
+    private static final KinesisVideoClient amazonKinesisVideo = KinesisVideoClient.builder()
+            .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
             .region(region)
             .build();
-    private static GetDataEndpointRequest.Builder gderb = GetDataEndpointRequest
-            .builder()
+    private static GetDataEndpointRequest.Builder gderb = GetDataEndpointRequest.builder()
             .apiName(APIName.GET_MEDIA);
 
     public static void getFastInputStreamFromKVS(String streamName) {
