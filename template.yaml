@@ -47,3 +47,18 @@ Resources:
               Resource:
                 - !Sub "arn:aws:kinesisvideo:${AWS::Region}:${AWS::AccountId}:stream/${StreamName}"
       Tracing: Active
+    Metadata:
+      BuildMethod: makefile
+  libs:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      ContentUri: layers/
+      Description: Dependencies for the kinesisTest function
+      LayerName: kinesisTest-libs
+      CompatibleRuntimes:
+        - java11
+      CompatibleArchitectures:
+        - arm64
+    Metadata:
+      BuildMethod: java11
+      BuildArchitecture: arm64

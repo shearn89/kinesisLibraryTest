@@ -1,17 +1,5 @@
 plugins {
-    id 'application'
-}
-apply plugin : "java"
-
-group 'com.shearn89'
-version '1.0-SNAPSHOT'
-
-ext {
-    javaMainClass = 'com.shearn89.kinesisLibraryTest.TestClass'
-}
-
-application {
-    mainClassName = 'com.shearn89.kinesisLibraryTest.TestClass'
+    id 'java'
 }
 
 repositories {
@@ -29,16 +17,15 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }
 
-task packageSkinny(type: Zip) {
-    from compileJava
-    from processResources
-}
-
-test {
-    useJUnitPlatform()
+task packageLibs(type: Zip) {
+    into('java/lib') {
+        from configurations.runtimeClasspath
+    }
+    dirMode = 0755
+    fileMode = 0755
 }
 
 sourceCompatibility = 11
 targetCompatibility = 11
 
-build.dependsOn packageSkinny
+build.dependsOn packageLibs
