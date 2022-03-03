@@ -23,7 +23,7 @@ Resources:
       Description: test kinesis library performance
       Architectures:
         - arm64
-      MemorySize: 128
+      MemorySize: 256
       Policies:
         - AWSLambdaBasicExecutionRole
         - AWSXrayWriteOnlyAccess
