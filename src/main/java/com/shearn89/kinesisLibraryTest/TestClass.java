@@ -7,6 +7,41 @@ import software.amazon.awssdk.services.kinesisvideo.model.GetDataEndpointRequest
 import software.amazon.awssdk.services.kinesisvideo.model.GetDataEndpointResponse;
 
 public class TestClass {
+    private static Region region = Region.EU_WEST_2;
+    private static KinesisVideoClient amazonKinesisVideo = KinesisVideoClient
+            .builder()
+            .region(region)
+            .build();
+    private static GetDataEndpointRequest.Builder gderb = GetDataEndpointRequest
+            .builder()
+            .apiName(APIName.GET_MEDIA);
+
+    public static void getFastInputStreamFromKVS(String streamName) {
+        System.out.println("running getInputStreamFromKVS");
+        long startTime = System.currentTimeMillis();
+        try {
+            if (null == streamName) {
+                throw new IllegalArgumentException("must provide streamName");
+            }
+            if (null == region) {
+                throw new IllegalArgumentException("must provide region");
+            }
+
+            System.out.println("building GDER");
+            GetDataEndpointRequest gder = gderb.streamName(streamName).build();
+            System.out.println("built GDER");
+            printTime(startTime);
+
+            System.out.println("getting endpoint");
+            GetDataEndpointResponse endPointResponse = amazonKinesisVideo.getDataEndpoint(gder);
+            String endPoint = endPointResponse.dataEndpoint();
+            System.out.println("got endpoint: "+endPoint);
+        } catch (Exception e) {
+            System.err.println(e.getLocalizedMessage());
+        } finally {
+            printTime(startTime);
+        }
+    }
 
     public static void getInputStreamFromKVS(String streamName, Region region) {
         System.out.println("running getInputStreamFromKVS");

@@ -10,7 +10,8 @@ public class TestLambda implements RequestHandler<Map<String,Object>, String> {
     public TestLambda() {}
 
     public String handleRequest(Map<String,Object> event, Context context) {
-        TestClass.getInputStreamFromKVS("foobar", Region.EU_WEST_2);
+//        TestClass.getInputStreamFromKVS("foobar", Region.EU_WEST_2);
+        TestClass.getFastInputStreamFromKVS("foobar");
         return "OK";
     }
 }
