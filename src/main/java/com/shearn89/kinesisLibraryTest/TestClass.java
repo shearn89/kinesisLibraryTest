@@ -34,8 +34,7 @@ public class TestClass {
             printTime(startTime);
 
             System.out.println("getting endpoint");
-            GetDataEndpointResponse endPointResponse = amazonKinesisVideo.getDataEndpoint(gder);
-            String endPoint = endPointResponse.dataEndpoint();
+            String endPoint = amazonKinesisVideo.getDataEndpoint(gder).dataEndpoint();
             System.out.println("got endpoint: "+endPoint);
         } catch (Exception e) {
             System.err.println(e.getLocalizedMessage());
