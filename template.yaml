@@ -47,6 +47,8 @@ Resources:
               Resource:
                 - !Sub "arn:aws:kinesisvideo:${AWS::Region}:${AWS::AccountId}:stream/${StreamName}"
       Tracing: Active
+      Layers:
+        - !Ref libs
     Metadata:
       BuildMethod: makefile
   libs:
